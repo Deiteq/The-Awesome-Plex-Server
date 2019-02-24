@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Title:      PlexGuide (Reference Title File)
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://plexguide.com - http://github.plexguide.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS ######################################################################
+  - cron:
+      name: Build a Cron Job - Auto Prune
+      special_time: "hourly"
+      job: "prune 1>/dev/null 2>&1"
+      state: present
+    ignore_errors: yes
+
+  - cron:
+      name: Hourly Clean PG Clone Clean
+      special_time: "hourly"
+      job: "bash /opt/plexguide/menu/pgclone/cloneclean.sh"
+      state: present
+    ignore_errors: yes
